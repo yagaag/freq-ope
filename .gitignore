@@ -1,3 +1,6 @@
 .ipynb_checkpoints
 __pycache__
 *.DS_Store
+freq_ope.egg-info/
+build/
+dist/

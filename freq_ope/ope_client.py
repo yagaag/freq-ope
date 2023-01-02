@@ -1,10 +1,10 @@
-from key import cointoss
-from aes_cipher import AESCipher
-from ope_server import OPE
+from .key import cointoss
+from .aes_cipher import AESCipher
+from .ope_server import OPE_Server
 
-class Client(object):
+class OPE_Client(object):
 
-    def __init__(self, aes, ope):
+    def __init__(self, aes: AESCipher, ope: OPE_Server):
         self.aes = aes
         self.ope = ope
     

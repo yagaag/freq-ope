@@ -1,6 +1,6 @@
-from tree import TreeNode
+from .tree import TreeNode
 
-class OPE(object):
+class OPE_Server(object):
 
     root, size = None, 0
 
