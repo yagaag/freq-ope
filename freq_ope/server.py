@@ -1,6 +1,6 @@
 from .tree import TreeNode
 
-class OPE_Server(object):
+class OPEServer(object):
 
     root, size = None, 0
 
@@ -10,7 +10,7 @@ class OPE_Server(object):
         self.root = None
         self.dct = {}
     
-    def val_at_tree_pos(self, node, s):
+    def val_at_tree_pos(self, node: TreeNode, s: str):
         if s == '':
             return node.val if node else None
         if len(s) != 1:
@@ -24,7 +24,7 @@ class OPE_Server(object):
             else:
                 return node.right.val if node.right else None
         
-    def add(self, node, s, val):
+    def add(self, node, s: str, val: int):
         if not s or node is None:
             node = TreeNode(val)
         else:
@@ -41,7 +41,7 @@ class OPE_Server(object):
         self.length += 1
         return node
     
-    def add_node(self, node, s, n):
+    def add_node(self, node, s: str, n: TreeNode):
         if not s or node is None:
             node = n
         else:
@@ -58,7 +58,7 @@ class OPE_Server(object):
         self.length += 1
         return node
         
-    def get_node(self, node, s):
+    def get_node(self, node, s: str):
         if s == '':
             return node if node else None
         if len(s) != 1:
@@ -72,5 +72,5 @@ class OPE_Server(object):
             else:
                 return node.right if node.right else None
         
-    def add_to_dct(self, key, val):
+    def add_to_dct(self, key: int, val: bytes):
         self.dct[key] = val

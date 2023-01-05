@@ -1,6 +1,6 @@
 import random
 
-def keygen(bits):
+def keygen(bits: int):
     key = 0
     for i in range(bits-1):
         if random.randrange(0,1e10) % 2:

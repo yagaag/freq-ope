@@ -1,44 +1,45 @@
 from .key import cointoss
-from .aes_cipher import AESCipher
-from .ope_server import OPE_Server
+from .aes import AESCipher
+from .server import OPEServer
 
-class OPE_Client(object):
+class OPEClient(object):
 
-    def __init__(self, aes: AESCipher, ope: OPE_Server):
+    def __init__(self, aes: AESCipher, ope: OPEServer):
         self.aes = aes
         self.ope = ope
     
-    def add_plaintext(self, val):
+    def add_plaintext(self, val: int):
         
         s = ''
-        done = False
         match = "g"
-        what_to_add = self.ope.M//2
+        add_val = self.ope.M//2
         
         start = 0
         end = self.ope.M
+        ct = 0
 
-        while not done:
+        while True:
+            ct+=1
+            if ct == self.ope.M:
+                return False
             mid = (end+start) // 2
             v = self.ope.val_at_tree_pos(self.ope.root, s)
             if not v:
-                what_to_add = mid
+                add_val = mid
                 if match != 'm' and s and cointoss():
                     s = s[:-1]
                     node = self.ope.get_node(self.ope.root, s)
-                    ct = self.ope.dct[node.val]
-                    self.ope.root = self.ope.add(self.ope.root, s, what_to_add)
+                    self.ope.root = self.ope.add(self.ope.root, s, add_val)
                     if match == 'l':
                        self.ope.root = self.ope.add_node(self.ope.root, s+'1', node)
                     else:
                         self.ope.root = self.ope.add_node(self.ope.root, s+'0', node)
                 else:
-                    self.ope.root = self.ope.add(self.ope.root, s, what_to_add)
-                self.ope.add_to_dct(what_to_add, self.aes.encrypt(str(val)))
-                return
+                    self.ope.root = self.ope.add(self.ope.root, s, add_val)
+                self.ope.add_to_dct(add_val, self.aes.encrypt(str(val)))
+                return True
             cipher = self.ope.dct[v]
             tree_val = self.aes.decrypt(cipher)
-            prev_val = v
             if val < int(tree_val):
                 match = "l"
                 s += '0'
